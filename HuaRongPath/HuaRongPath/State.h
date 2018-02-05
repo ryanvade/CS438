@@ -1,3 +1,14 @@
+/*
+* State.h
+*
+* Defines a 'state' of the HuaRong Game Board
+*
+* CS438 HW2
+*
+* Updated on 02/05/2018
+*
+* Created by Ryan Owens
+*/
 #pragma once
 #include "Board.h"
 #include <vector>

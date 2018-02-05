@@ -1,3 +1,14 @@
+/*
+ * Board.h 
+ * 
+ * Used to define a 'game board' of HuaRong  Path
+ * 
+ * CS438 HW2
+ * 
+ * Updated on 02/05/2018
+ *
+ * Created by Ryan Owens
+ */
 #pragma once
 #include <fstream>
 #include <iostream>
