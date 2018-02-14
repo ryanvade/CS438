@@ -1,6 +1,16 @@
+/*
+* State.cpp
+*
+* Defines a 'state' of the HuaRong Game Board
+*
+* CS438 HW2
+*
+* Updated on 02/05/2018
+*
+* Created by Ryan Owens
+*/
+
 #include "State.h"
-
-
 
 State::State(Board* result)
 {
@@ -37,4 +47,20 @@ bool State::operator<(const State& A) {
 
 State::~State()
 {
+	if (result != nullptr) {
+		//delete(result);
+		//result == nullptr;
+	}
+
+	if (parent != nullptr) {
+		//delete(parent);
+	}
+
+	/*for (size_t i = 0; i < this->children.size(); i++)
+	{
+		if (children.at(i) != nullptr) {
+			delete(children.at(i));
+			children.at(i) = nullptr;
+		}
+	}*/
 }

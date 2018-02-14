@@ -1,6 +1,16 @@
+/*
+* Board.cpp
+*
+* Used to define a 'game board' of HuaRong  Path
+*
+* CS438 HW2
+*
+* Updated on 02/05/2018
+*
+* Created by Ryan Owens
+*/
+
 #include "Board.h"
-
-
 
 Board::Board()
 {
@@ -19,6 +29,7 @@ Board::Board(Board* b) {
 
 Board::~Board()
 {
+
 }
 
 
@@ -81,21 +92,25 @@ bool Board::isSingle(int r, int c) {
 }
 
 bool Board::isLeftOfHorizontalTwo(int r, int c) {
-	if (r >= 5 || c >= 4 || r < 0 || c < 0) {
+	if (r >= 5 || c >= 3 || r < 0 || c < 0) {
 		return false;
 	}
 	char curr = this->board[r][c];
-	if (c < 3 && this->board[r][c+1] == curr) return true;
-	return false;
+	if (c < 3 && this->board[r][c+1] != curr) return false;
+	if (r < 4 && this->board[r+1][c] == curr) return false;
+	if (r > 0 && this->board[r - 1][c] == curr) return false;
+
+	return true;
 }
 
 bool Board::isTopOfVerticalTwo(int r, int c) {
-	if (r >= 5 || c >= 4 || r < 0 || c < 0) {
+	if (r >= 4 || c >= 4 || r < 0 || c < 0) {
 		return false;
 	}
 	char curr = this->board[r][c];
 	if (r < 4 && this->board[r+1][c] != curr) return false;
-	if (c > 0 && this->board[r + 1][c-1] == curr) return true;
+	if (c > 0 && this->board[r + 1][c - 1] == curr) return false;
+	if (c > 0 && this->board[r + 1][c + 1] == curr) return false;
 	return true;
 }
 
@@ -105,8 +120,8 @@ bool Board::isTopLeftOfQuad(int r, int c) {
 	}
 
 	char curr = this->board[r][c];
-	if (this->isLeftOfHorizontalTwo(r, c) && this->isTopOfVerticalTwo(r, c) && this->board[r+1][c+1] == curr) {
-		return true;
-	}
-	return false;
+	if (this->board[r][c+1] != curr) return false;
+	if (this->board[r+1][c] != curr) return false;
+	if (this->board[r+1][c + 1] != curr) return false;
+	return true;
 }
