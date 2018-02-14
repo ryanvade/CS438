@@ -21,7 +21,7 @@ bool Solver::dfs()
 	{
 		State* current = open.top();
 		open.pop();
-		if (open.size() > 999) {
+		if (open.size() > 500 || closed.size() > 500) {
 			return false;
 		}
 		if (this->solved(current))

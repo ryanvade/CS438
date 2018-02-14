@@ -7,7 +7,7 @@
 #include <list>
 #include <algorithm>
 
-#define DEBUG false
+#define DEBUG true
 
 
 class Solver
