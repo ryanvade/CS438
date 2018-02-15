@@ -1,3 +1,5 @@
+#include <queue>
+
 #pragma once
 #include "SearchAlgorithm.h"
 class BFSSearcher :

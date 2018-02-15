@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
 #pragma once
@@ -6,6 +7,7 @@
 #define BLACK 'B'
 #define OUTOFBOUNDS '#'
 #define BLANK ' '
+#define DEBUG false
 
 class Board
 {
@@ -15,6 +17,8 @@ public:
 	std::string serialize();
 	bool solved();
 	std::vector<Board*> getMoves();
+	void print(std::ostream& out);
+	void __serialize();
 	Board* attemptUp(int r, int c);
 	Board* attemptDown(int r, int c);
 	Board* attemptLeft(int r, int c);
@@ -25,11 +29,11 @@ public:
 	Board* attemptJumpRight(int r, int c);
 	~Board();
 	Board* parent;
-	std::vector<Board*> children;
 
 private:
 	int size;
 	char** board;
+	std::string serialized;
 
 };
 
