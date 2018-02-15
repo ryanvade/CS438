@@ -2,7 +2,7 @@
 #include <string>
 #include "Board.h"
 
-#define DEBUG false
+#define DEBUG true
 #pragma once
 class SearchAlgorithm
 {

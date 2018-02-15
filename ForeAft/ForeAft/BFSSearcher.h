@@ -1,4 +1,5 @@
 #include <queue>
+#include <memory>
 
 #pragma once
 #include "SearchAlgorithm.h"

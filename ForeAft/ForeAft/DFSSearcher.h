@@ -1,5 +1,6 @@
 #pragma once
 #include <stack>
+#include <memory>
 #include "SearchAlgorithm.h"
 #include "Board.h"
 

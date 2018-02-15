@@ -11,8 +11,6 @@ BFSSearcher::BFSSearcher(int size)
 
 BFSSearcher::~BFSSearcher()
 {
-	delete(this->initial);
-	this->initial = nullptr;
 }
 
 void BFSSearcher::solve()
@@ -23,7 +21,7 @@ void BFSSearcher::solve()
 	closed.insert(this->initial->serialize());
 
 	this->solution = nullptr;
-	Board* current = nullptr;
+	Board* current;
 	while (!open.empty() && this->solution == nullptr) {
 		current = open.front();
 		open.pop();
@@ -37,6 +35,9 @@ void BFSSearcher::solve()
 			for (auto iter = moves.begin(); iter != moves.end(); iter++) {
 				Board* move = *iter;
 				if (closed.find(move->serialize()) == closed.end()) {
+					move->gv = (current->gv) + 1.0;
+					move->fv = move->hValue() + move->gv;
+
 					closed.insert(move->serialize());
 					open.push(move);
 				}
