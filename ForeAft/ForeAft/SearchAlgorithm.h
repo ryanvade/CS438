@@ -1,8 +1,9 @@
 #include <set>
 #include <string>
+#include <stack>
 #include "Board.h"
 
-#define DEBUG true
+#define DEBUG false
 #pragma once
 class SearchAlgorithm
 {

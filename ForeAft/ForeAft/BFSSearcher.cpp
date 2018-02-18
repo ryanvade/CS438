@@ -56,4 +56,45 @@ void BFSSearcher::createBoard()
 
 void BFSSearcher::printResults()
 {
+	if (this->solution == nullptr) {
+		std::cout << "No Solution" << std::endl;
+	}
+
+	std::stack<Board*> boards;
+	Board* current = this->solution;
+	while (current != nullptr) {
+		boards.push(current);
+		current = current->parent;
+	}
+	current = nullptr;
+	int steps = boards.size();
+	std::ofstream out;
+	std::string filename = "Best" + std::to_string(this->size) + ".out";
+	out.open(filename, std::ofstream::out);
+	if (!out.is_open()) {
+		std::cerr << "Could not open file: " << filename << std::endl;
+		exit(1);
+	}
+
+	while (!boards.empty()) {
+		current = boards.top();
+		boards.pop();
+		if (DEBUG) {
+			current->print(std::cout);
+			std::cout << std::endl;
+		}
+		else {
+			current->print(out);
+			out << std::endl;
+		}
+		delete(current);
+	}
+
+	if (DEBUG) {
+		std::cout << steps << " steps" << std::endl;
+	}
+	else {
+		out << steps << " steps" << std::endl;
+		out.close();
+	}
 }
