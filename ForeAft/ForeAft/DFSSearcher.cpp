@@ -17,6 +17,7 @@ void DFSSearcher::solve()
 {
 	std::stack<Board*> open;
 	std::set<std::string> closed;
+	this->initial->hv = 1.0;
 	open.push(this->initial);
 	closed.insert(this->initial->serialize());
 
@@ -36,8 +37,6 @@ void DFSSearcher::solve()
 			for (auto iter = moves.begin(); iter != moves.end(); iter++) {
 				Board* move = *iter;
 				if (closed.find(move->serialize()) == closed.end()) {
-					move->gv = (current->gv) + 1.0;
-					move->fv = move->hValue() + move->gv;
 
 					closed.insert(move->serialize());
 					open.push(move);

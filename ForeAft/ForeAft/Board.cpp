@@ -153,20 +153,15 @@ std::vector<Board*> Board::getMoves() {
 	int r = this->blank_r;
 	int c = this->blank_c;
 	std::vector<Board*> moves;
-	
-	Board* up = this->attemptUp(r, c);
-	if (up != nullptr) {
-		moves.push_back(up);
-	}
 
 	Board* jumpUp = this->attemptJumpUp(r, c);
 	if (jumpUp != nullptr) {
 		moves.push_back(jumpUp);
 	}
-
-	Board* right = this->attemptRight(r, c);
-	if (right != nullptr) {
-		moves.push_back(right);
+	
+	Board* jumpDown = this->attemptJumpDown(r, c);
+	if (jumpDown != nullptr) {
+		moves.push_back(jumpDown);
 	}
 
 	Board* jumpRight = this->attemptJumpRight(r, c);
@@ -174,14 +169,14 @@ std::vector<Board*> Board::getMoves() {
 		moves.push_back(jumpRight);
 	}
 
-	Board* left = this->attemptLeft(r, c);
-	if (left != nullptr) {
-		moves.push_back(left);
-	}
-
 	Board* jumpLeft = this->attemptJumpLeft(r, c);
 	if (jumpLeft != nullptr) {
 		moves.push_back(jumpLeft);
+	}
+
+	Board* up = this->attemptUp(r, c);
+	if (up != nullptr) {
+		moves.push_back(up);
 	}
 
 	Board* down = this->attemptDown(r, c);
@@ -189,9 +184,14 @@ std::vector<Board*> Board::getMoves() {
 		moves.push_back(down);
 	}
 
-	Board* jumpDown = this->attemptJumpDown(r, c);
-	if (jumpDown != nullptr) {
-		moves.push_back(jumpDown);
+	Board* right = this->attemptRight(r, c);
+	if (right != nullptr) {
+		moves.push_back(right);
+	}
+
+	Board* left = this->attemptLeft(r, c);
+	if (left != nullptr) {
+		moves.push_back(left);
 	}
 
 	return moves;
@@ -317,7 +317,22 @@ bool Board::operator>(Board*  rhs) const
 float Board::hValue() {
 	if (this->hv == -1) {
 		float h = 0.0;
-		int v_divide = (0.5 * (size + 1)) - 1;
+		
+		std::string ser = this->serialize();
+		int len = this->size * this->size;
+		for (size_t i = 0; i < len; i++)
+		{
+			if (ser[i] != OUTOFBOUNDS && ser[i] != BLANK) {
+				if (ser[i] == BLACK && i < len / 2) {
+					h += 1.0;
+				}
+				else if (ser[i] == RED && i >= len / 2) {
+					h += 1.0;
+				}
+			}
+		}
+
+		/*int v_divide = (0.5 * (size + 1)) - 1;
 		int h_divide = v_divide;
 		for (size_t i = 0; i < size; i++)
 		{
@@ -353,7 +368,7 @@ float Board::hValue() {
 					}
 				}
 			}
-		}
+		}*/
 		this->hv = h * C;
 	}
 	return this->hv;
