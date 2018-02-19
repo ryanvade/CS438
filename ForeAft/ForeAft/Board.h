@@ -5,12 +5,13 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <math.h> 
 #define RED 'R'
 #define BLACK 'B'
 #define OUTOFBOUNDS '#'
 #define BLANK ' '
 #define DEBUG false
-#define C 2.0
+#define C 100.0
 
 class Board
 {
@@ -43,6 +44,7 @@ private:
 	std::string serialized;
 	int blank_r;
 	int blank_c;
+	int outOfBounds_count;
 
 };
 

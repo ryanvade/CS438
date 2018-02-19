@@ -69,7 +69,7 @@ void BFSSearcher::printResults()
 	current = nullptr;
 	int steps = boards.size();
 	std::ofstream out;
-	std::string filename = "Best" + std::to_string(this->size) + ".out";
+	std::string filename = "BFS" + std::to_string(this->size) + ".out";
 	out.open(filename, std::ofstream::out);
 	if (!out.is_open()) {
 		std::cerr << "Could not open file: " << filename << std::endl;

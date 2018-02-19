@@ -17,6 +17,7 @@ Board::Board(int size)
 
 	int v_divide = (0.5 * (size + 1)) - 1;
 	int h_divide = v_divide;
+	this->outOfBounds_count = 0;
 	for (size_t i = 0; i < size; i++)
 	{
 		for (size_t j = 0; j < size; j++)
@@ -28,6 +29,7 @@ Board::Board(int size)
 				}
 				else {
 					this->board[i][j] = OUTOFBOUNDS;
+					this->outOfBounds_count++;
 				}
 			}
 			else if (i == v_divide) {
@@ -50,6 +52,7 @@ Board::Board(int size)
 				}
 				else {
 					this->board[i][j] = OUTOFBOUNDS;
+					this->outOfBounds_count++;
 				}
 			}
 		}
@@ -322,52 +325,37 @@ float Board::hValue() {
 		int len = this->size * this->size;
 		for (size_t i = 0; i < len; i++)
 		{
-			if (ser[i] != OUTOFBOUNDS && ser[i] != BLANK) {
 				if (ser[i] == BLACK && i < len / 2) {
 					h += 1.0;
 				}
 				else if (ser[i] == RED && i >= len / 2) {
 					h += 1.0;
 				}
+				else if (ser[i] == BLANK && i != len / 2) {
+					h += 1.0;
+				}
+		}
+		if (DEBUG) {
+			std::cout << ser << std::endl;
+			std::cout << h << std::endl << std::endl;
+		}
+		
+		/*int max = (this->size * this->size) - this->outOfBounds_count - 1;
+		std::string ser = this->serialize();
+		int obc = 0;
+		for (size_t i = 0; i < (ser.length() / 2) + 1; i++)
+		{
+
+			if (ser[i] != OUTOFBOUNDS) {
+				if (ser[i] == RED) {
+					h = h + max;
+				}
+				max--;
 			}
 		}
-
-		/*int v_divide = (0.5 * (size + 1)) - 1;
-		int h_divide = v_divide;
-		for (size_t i = 0; i < size; i++)
-		{
-			for (size_t j = 0; j < size; j++)
-			{
-				if (i < v_divide) {
-					// Red Boundary
-					if (j <= h_divide) {
-						if (this->board[i][j] == RED) {
-							h += 1.0;
-						}
-					}
-				}
-				else if (i == v_divide) {
-					if (j < h_divide) {
-						if (this->board[i][j] == RED) {
-							h += 1.0;
-						}
-					}
-					else if (j > h_divide) {
-						if (this->board[i][j] == BLACK) {
-							h += 1.0;
-						}
-					}
-				}
-				else {
-					// Black Boundary
-					if (j >= h_divide) {
-						if (this->board[i][j] == BLACK)
-						{
-							h += 1.0;
-						}
-					}
-				}
-			}
+		if (DEBUG) {
+			std::cout << ser << std::endl;
+			std::cout << h << std::endl << std::endl;
 		}*/
 		this->hv = h * C;
 	}
