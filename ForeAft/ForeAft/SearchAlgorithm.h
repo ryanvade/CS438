@@ -14,7 +14,8 @@
 #include <stack>
 #include "Board.h"
 
-#define DEBUG false
+// enable for debugging
+//#define DEBUG true
 #pragma once
 class SearchAlgorithm
 {

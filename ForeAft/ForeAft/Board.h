@@ -20,9 +20,11 @@
 #define RED 'R'
 #define BLACK 'B'
 #define OUTOFBOUNDS '#'
-#define BLANK ' '
-#define DEBUG false
+#define BLANK '0'
 #define C 1000.0
+
+// Enable for debugging
+//#define DEBUG true
 
 class Board
 {

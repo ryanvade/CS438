@@ -153,19 +153,22 @@ void Board::print(std::ostream& out) {
 bool Board::solved() {
 	std::string solved = "";
 	if (this->size == 5) {
-		solved = "BBB##BBB##BB RR##RRR##RRR";
+		solved = "BBB##BBB##BB0RR##RRR##RRR";
 	}
 	else if (this->size == 7) {
-		solved = "BBBB###BBBB###BBBB###BBB RRR###RRRR###RRRR###RRRR";
+		solved = "BBBB###BBBB###BBBB###BBB0RRR###RRRR###RRRR###RRRR";
 	}
 	else if (this->size == 9){
-		solved = "BBBBB####BBBBB####BBBBB####BBBBB####BBBB RRRR####RRRRR####RRRRR####RRRRR####RRRRR";
+		solved = "BBBBB####BBBBB####BBBBB####BBBBB####BBBB0RRRR####RRRRR####RRRRR####RRRRR####RRRRR";
 	}
 	else {
-		solved = "BBBBBB#####BBBBBB#####BBBBBB#####BBBBBB#####BBBBBB#####BBBBB RRRRR#####RRRRRR#####RRRRRR#####RRRRRR#####RRRRRR#####RRRRRR";
+		solved = "BBBBBB#####BBBBBB#####BBBBBB#####BBBBBB#####BBBBBB#####BBBBB0RRRRR#####RRRRRR#####RRRRRR#####RRRRRR#####RRRRRR#####RRRRRR";
 	}
 
-
+#ifdef DEBUG
+	std::cout << "Solved Board:  " << solved << std::endl;
+	std::cout << "Current Board: " << this->serialize() << std::endl;
+#endif
 	if (this->serialize() == solved) {
 		std::cout << "Solved!" << std::endl;
 		return true;
@@ -343,7 +346,9 @@ bool Board::operator>(Board*  rhs) const
 float Board::hValue() {
 	if (this->hv == -1) {
 		double h = 0.0;
+
 		if (this->size < 9) {
+			// Back up solver
 			std::string ser = this->serialize();
 			int len = this->size * this->size;
 			for (size_t i = 0; i < len; i++)
@@ -358,10 +363,10 @@ float Board::hValue() {
 			h += 1.0;
 			}
 			}
-			/*#ifdef DEBUG
+			#ifdef DEBUG
 			std::cout << ser << std::endl;
 			std::cout << h << std::endl << std::endl;
-			#endif*/
+			#endif
 			this->hv = h * C;
 
 		}
@@ -375,12 +380,10 @@ float Board::hValue() {
 			// pre-calculated value
 			int black_row_goal = this->black_max[this->size];
 			int black_col_goal = black_row_goal;
-			int half = (this->size - 1) / 2;
 			for (int i = 0; i < this->size; i++)
 			{
 				for (int j = 0; j < this->size; j++)
 				{
-					if (i != half && j != half) {
 						if (this->board[i][j] == BLACK )
 						{
 							black_row += i;
@@ -390,18 +393,17 @@ float Board::hValue() {
 							red_row += i;
 							red_col += j;
 						}
-					}
 				}
 			}
 			black_distance = abs(black_row_goal - black_row) + abs(black_col_goal - black_col);
 			red_distance = abs(red_row_goal - red_row) + abs(red_col_goal - red_col);
 			total_distance = red_distance + black_distance;
 			this->hv = total_distance * C;
-			/*#ifdef DEBUG
+			#ifdef DEBUG
 			std::cout << "Black Distance: " << black_distance;
 			std::cout << " Red Distance: " << red_distance;
 			std::cout << " Total Distance: " << total_distance << std::endl;
-			#endif // DEBUG */
+			#endif // DEBUG 
 		}
 
 		}

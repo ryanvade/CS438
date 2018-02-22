@@ -9,6 +9,13 @@
 *
 * Performs ForeAft State Tree search
 */
+
+/*
+ * Performance:
+ * DFS/BFS/A* 5x5 works well
+ * A* 7x7 uses 2GB ram but runs in less than 10 sec
+ * A* 9x9 and 11x11 do not find solutions
+ */
 #include <iostream>
 #include <fstream>
 #include <string>

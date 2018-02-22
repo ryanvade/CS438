@@ -88,19 +88,19 @@ void BFSSearcher::printResults()
 	while (!boards.empty()) {
 		current = boards.top();
 		boards.pop();
-		/*#ifdef DEBUG
+		#ifdef DEBUG
 		current->print(std::cout);
 		std::cout << std::endl;
-		#endif */
+		#endif 
 		current->print(out);
 		out << std::endl;
 	
 		delete(current);
 	}
 
-		/*#ifdef DEBUG
+		#ifdef DEBUG
 		std::cout << steps << " steps" << std::endl;
-		#endif*/
+		#endif
 		out << steps << " steps" << std::endl;
 		out.close();
 	
