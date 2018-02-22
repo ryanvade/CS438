@@ -1,3 +1,14 @@
+/*
+* AStarSearch.h
+*
+* By Ryan Owens
+*
+* For CS438
+*
+* Created on 02/13/2018
+*
+* 
+*/
 #pragma once
 #include <queue>
 #include <vector>

@@ -1,6 +1,15 @@
+/*
+* AStarSearcher.cpp
+*
+* By Ryan Owens
+*
+* For CS438
+*
+* Created on 02/13/2018
+*
+* Performs an DFS Search
+*/
 #include "DFSSearcher.h"
-
-
 
 DFSSearcher::DFSSearcher(int size)
 {
@@ -80,22 +89,18 @@ void DFSSearcher::printResults()
 	while (!boards.empty()) {
 		current = boards.top();
 		boards.pop();
-		if (DEBUG) {
+		/*#ifdef DEBUG
 			current->print(std::cout);
 			std::cout << std::endl;
-		}
-		else {
+		#endif*/
 			current->print(out);
 			out << std::endl;
-		}
 		delete(current);
 	}
 
-	if (DEBUG) {
+	/*#ifdef DEBUG
 		std::cout << steps << " steps" << std::endl;
-	}
-	else {
+	#endif*/
 		out << steps << " steps" << std::endl;
 		out.close();
-	}
 }

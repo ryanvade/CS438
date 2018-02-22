@@ -1,3 +1,14 @@
+/*
+* SearchAlgorithm.h
+*
+* By Ryan Owens
+*
+* For CS438
+*
+* Created on 02/13/2018
+*
+* State Tree searcher interface
+*/
 #include <set>
 #include <string>
 #include <stack>

@@ -1,4 +1,14 @@
-
+/*
+* Board.h
+*
+* By Ryan Owens
+*
+* For CS438
+*
+* Created on 02/13/2018
+*
+*
+*/
 #pragma once
 #include <iostream>
 #include <fstream>
@@ -6,13 +16,13 @@
 #include <string>
 #include <memory>
 #include <math.h> 
-//#include <map>
+#include <map>
 #define RED 'R'
 #define BLACK 'B'
 #define OUTOFBOUNDS '#'
 #define BLANK ' '
 #define DEBUG false
-#define C 3.0
+#define C 1000.0
 
 class Board
 {
@@ -46,6 +56,6 @@ private:
 	int blank_r;
 	int blank_c;
 	int outOfBounds_count;
-	//std::map<int, int> black_max, red_max;
+	std::map<int, int> black_max, red_max;
 };
 

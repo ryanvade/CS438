@@ -1,6 +1,15 @@
+/*
+* AStarSearcher.cpp
+*
+* By Ryan Owens
+*
+* For CS438
+*
+* Created on 02/13/2018
+*
+* Performs an A* Search
+*/
 #include "AStarSearcher.h"
-
-
 
 AStarSearcher::AStarSearcher(int size)
 {
@@ -19,6 +28,7 @@ void AStarSearcher::solve()
 	std::priority_queue<Board*, std::vector<Board*>, BoardComparator> open;
 	std::set<std::string> closed;
 	this->initial->gv = 0;
+	this->initial->fv = this->initial->hValue();
 	open.push(this->initial);
 	closed.insert(this->initial->serialize());
 
@@ -27,6 +37,9 @@ void AStarSearcher::solve()
 	while (!open.empty() && this->solution == nullptr) {
 		current = open.top();
 		open.pop();
+			/*#ifdef DEBUG
+			std::cout << "Current FV: " << current->fv << std::endl;
+			#endif */
 
 		if (current->solved()) {
 			this->solution = current;
@@ -81,22 +94,18 @@ void AStarSearcher::printResults()
 		while (!boards.empty()) {
 			current = boards.top();
 			boards.pop();
-			if (DEBUG) {
+				/*#ifdef DEBUG
 				current->print(std::cout);
 				std::cout << std::endl;
-			}
-			else {
+				#endif*/
 				current->print(out);
 				out << std::endl;
-			}
 			delete(current);
 		}
 
-		if (DEBUG) {
+			/*#ifdef DEBUG
 			std::cout << steps << " steps" << std::endl;
-		}
-		else {
+			#endif*/
 			out << steps << " steps" << std::endl;
 			out.close();
-		}
 }

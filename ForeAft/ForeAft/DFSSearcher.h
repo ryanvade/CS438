@@ -1,3 +1,14 @@
+/*
+* DFSSearcher.h
+*
+* By Ryan Owens
+*
+* For CS438
+*
+* Created on 02/13/2018
+*
+*
+*/
 #pragma once
 #include <stack>
 #include <memory>

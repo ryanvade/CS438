@@ -1,5 +1,16 @@
-#include "Board.h"
+/*
+* Board.cpp
+*
+* By Ryan Owens
+*
+* For CS438
+*
+* Created on 02/13/2018
+*
+* Defines a ForeAft board
+*/
 
+#include "Board.h"
 
 Board::Board() {
 
@@ -10,16 +21,12 @@ Board::Board(int size)
 	std::cout << "Board Size: " << size << std::endl;
 	this->size = size;
 	this->board = new char*[size];
-	for (size_t i = 0; i < size; i++)
-	{
-		this->board[i] = new char[size];
-	}
-
 	int v_divide = (0.5 * (size + 1)) - 1;
 	int h_divide = v_divide;
 	this->outOfBounds_count = 0;
 	for (size_t i = 0; i < size; i++)
 	{
+		this->board[i] = new char[size];
 		for (size_t j = 0; j < size; j++)
 		{
 			if (i < v_divide) {
@@ -61,27 +68,24 @@ Board::Board(int size)
 	this->hv = -1;
 	this->gv = 0;
 
-	/*this->black_max[5] = 15;
+	this->black_max[5] = 15;
 	this->black_max[7] = 36;
 	this->black_max[9] = 70;
 	this->black_max[11] = 120;
 	this->red_max[5] = 33;
 	this->red_max[7] = 56;
 	this->red_max[9] = 170;
-	this->red_max[11] = 300;*/
+	this->red_max[11] = 300;
 
 }
 
 Board::Board(int size, char** board) {
 	this->size = size;
 	this->board = new char*[size];
-	for (size_t i = 0; i < size; i++)
-	{
-		this->board[i] = new char[size];
-	}
 
 	for (size_t i = 0; i < size; i++)
 	{
+		this->board[i] = new char[size];
 		for (size_t j = 0; j < size; j++)
 		{
 			this->board[i][j] = board[i][j];
@@ -95,13 +99,14 @@ Board::Board(int size, char** board) {
 	this->hv = -1;
 	this->gv = 0;
 	
-	/*this->black_max[7] = 36;
+	this->black_max[5] = 15;
+	this->black_max[7] = 36;
 	this->black_max[9] = 70;
 	this->black_max[11] = 120;
 	this->red_max[5] = 33;
 	this->red_max[7] = 56;
 	this->red_max[9] = 170;
-	this->red_max[11] = 300;*/
+	this->red_max[11] = 300;
 }
 
 
@@ -338,95 +343,67 @@ bool Board::operator>(Board*  rhs) const
 float Board::hValue() {
 	if (this->hv == -1) {
 		double h = 0.0;
-		
-		/*std::string ser = this->serialize();
-		int len = this->size * this->size;
-		for (size_t i = 0; i < len; i++)
-		{
-				if (ser[i] == BLACK && i < len / 2) {
-					h += 1.0;
-				}
-				else if (ser[i] == RED && i >= len / 2) {
-					h += 1.0;
-				}
-				else if (ser[i] == BLANK && i != len / 2) {
-					h += 1.0;
-				}
-		}
-		if (DEBUG) {
+		if (this->size < 9) {
+			std::string ser = this->serialize();
+			int len = this->size * this->size;
+			for (size_t i = 0; i < len; i++)
+			{
+			if (ser[i] == BLACK && i < len / 2) {
+			h += 1.0;
+			}
+			else if (ser[i] == RED && i >= len / 2) {
+			h += 1.0;
+			}
+			else if (ser[i] == BLANK && i != len / 2) {
+			h += 1.0;
+			}
+			}
+			/*#ifdef DEBUG
 			std::cout << ser << std::endl;
 			std::cout << h << std::endl << std::endl;
-		}
-		*/
-		int total_distance, red_distance, black_distance;
-		int blackRowGoal, blackColGoal;
-		int r = 0, c = 0;
-		int value;
-		int totalValue = 0;
-		int halfSize = (this->size - 1) / 2;
-		for (int i = 0; i <= halfSize; i++)
-		{
-			for (int j = 0; j <= halfSize; j++)
-			{
-				r += i;
-				c += j;
-			}
-		}
-		r - halfSize - 1;
-		c - halfSize - 1;
-		blackRowGoal = r;
-		blackColGoal = c;
-		int blackRowCurr, blackColCurr;
-		r = 0, c = 0;
-		for (int i = 0; i < this->size; i++)
-		{
-			for (int j = 0; j < this->size; j++)
-			{
-				if (this->board[i][j] == BLACK)
-				{
-					r += i;
-					c += j;
-				}
-			}
-		}
-		blackRowCurr = r; 
-		blackColCurr = c;
-		black_distance = abs(blackRowGoal - blackRowCurr) + abs(blackColGoal - blackColCurr);
-		int redRowGoal, redColGoal;
-		r = 0, c = 0;
-		totalValue = 0;
-		for (int i = halfSize; i < this->size; i++)
-		{
-			for (int j = halfSize; j < this->size; j++)
-			{
-				r += i;
-				c += j;
-			}
-		}
-		r - halfSize;
-		c - halfSize;
-		redRowGoal = r; 
-		redColGoal = c;
-		int redRowCurr, redColCurr;
-		 r = 0, c = 0;
-		for (int i = 0; i < this->size; i++)
-		{
-			for (int j = 0; j < this->size; j++)
-			{
-				if (this->board[i][j] == RED)
-				{
-					r += i;
-					c += j;
-				}
-			}
-		}
-		redRowCurr = r; redColCurr = c;
-		//get the total black distance
-		red_distance = abs(redRowGoal - redRowCurr) + abs(redColGoal - redColCurr);
+			#endif*/
+			this->hv = h * C;
 
-		//get the total distance of black and red pieces
-		total_distance = red_distance + black_distance;
-		this->hv = total_distance * C;
-	}
+		}
+		else {
+			int total_distance, red_distance, black_distance;
+			int red_row = 0, red_col = 0;
+			int black_row = 0, black_col = 0;
+			// pre-calculated value
+			int red_row_goal = this->red_max[this->size];
+			int red_col_goal = red_row_goal;
+			// pre-calculated value
+			int black_row_goal = this->black_max[this->size];
+			int black_col_goal = black_row_goal;
+			int half = (this->size - 1) / 2;
+			for (int i = 0; i < this->size; i++)
+			{
+				for (int j = 0; j < this->size; j++)
+				{
+					if (i != half && j != half) {
+						if (this->board[i][j] == BLACK )
+						{
+							black_row += i;
+							black_col += j;
+						}
+						else if (this->board[i][j] == RED) {
+							red_row += i;
+							red_col += j;
+						}
+					}
+				}
+			}
+			black_distance = abs(black_row_goal - black_row) + abs(black_col_goal - black_col);
+			red_distance = abs(red_row_goal - red_row) + abs(red_col_goal - red_col);
+			total_distance = red_distance + black_distance;
+			this->hv = total_distance * C;
+			/*#ifdef DEBUG
+			std::cout << "Black Distance: " << black_distance;
+			std::cout << " Red Distance: " << red_distance;
+			std::cout << " Total Distance: " << total_distance << std::endl;
+			#endif // DEBUG */
+		}
+
+		}
 	return this->hv;
 }

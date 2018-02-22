@@ -1,3 +1,14 @@
+/*
+* Main.cpp
+*
+* By Ryan Owens
+*
+* For CS438
+*
+* Created on 02/13/2018
+*
+* Performs ForeAft State Tree search
+*/
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -30,9 +41,9 @@ int main(int argc, char** argv) {
 		if (search == '1') {
 			// ask for a board size
 			do {
-				std::cout << "Enter puzzle size for DFS (5 or 7): " << std::endl;
+				std::cout << "Enter puzzle size for DFS (5 only): " << std::endl;
 				std::cin >> size;
-			} while (size != "5" && size != "7");
+			} while (size != "5" /*&& size != "7" */);
 			s = std::stoi(size);
 			sa = new DFSSearcher(s);
 		}
