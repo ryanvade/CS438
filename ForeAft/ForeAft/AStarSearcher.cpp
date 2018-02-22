@@ -18,7 +18,7 @@ void AStarSearcher::solve()
 {
 	std::priority_queue<Board*, std::vector<Board*>, BoardComparator> open;
 	std::set<std::string> closed;
-	this->initial->hv = 1.0;
+	this->initial->gv = 0;
 	open.push(this->initial);
 	closed.insert(this->initial->serialize());
 

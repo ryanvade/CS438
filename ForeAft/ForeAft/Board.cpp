@@ -60,6 +60,16 @@ Board::Board(int size)
 	this->serialized = "";
 	this->hv = -1;
 	this->gv = 0;
+
+	/*this->black_max[5] = 15;
+	this->black_max[7] = 36;
+	this->black_max[9] = 70;
+	this->black_max[11] = 120;
+	this->red_max[5] = 33;
+	this->red_max[7] = 56;
+	this->red_max[9] = 170;
+	this->red_max[11] = 300;*/
+
 }
 
 Board::Board(int size, char** board) {
@@ -84,6 +94,14 @@ Board::Board(int size, char** board) {
 	this->serialized = "";
 	this->hv = -1;
 	this->gv = 0;
+	
+	/*this->black_max[7] = 36;
+	this->black_max[9] = 70;
+	this->black_max[11] = 120;
+	this->red_max[5] = 33;
+	this->red_max[7] = 56;
+	this->red_max[9] = 170;
+	this->red_max[11] = 300;*/
 }
 
 
@@ -319,9 +337,9 @@ bool Board::operator>(Board*  rhs) const
 
 float Board::hValue() {
 	if (this->hv == -1) {
-		float h = 0.0;
+		double h = 0.0;
 		
-		std::string ser = this->serialize();
+		/*std::string ser = this->serialize();
 		int len = this->size * this->size;
 		for (size_t i = 0; i < len; i++)
 		{
@@ -339,25 +357,76 @@ float Board::hValue() {
 			std::cout << ser << std::endl;
 			std::cout << h << std::endl << std::endl;
 		}
-		
-		/*int max = (this->size * this->size) - this->outOfBounds_count - 1;
-		std::string ser = this->serialize();
-		int obc = 0;
-		for (size_t i = 0; i < (ser.length() / 2) + 1; i++)
+		*/
+		int total_distance, red_distance, black_distance;
+		int blackRowGoal, blackColGoal;
+		int r = 0, c = 0;
+		int value;
+		int totalValue = 0;
+		int halfSize = (this->size - 1) / 2;
+		for (int i = 0; i <= halfSize; i++)
 		{
-
-			if (ser[i] != OUTOFBOUNDS) {
-				if (ser[i] == RED) {
-					h = h + max;
-				}
-				max--;
+			for (int j = 0; j <= halfSize; j++)
+			{
+				r += i;
+				c += j;
 			}
 		}
-		if (DEBUG) {
-			std::cout << ser << std::endl;
-			std::cout << h << std::endl << std::endl;
-		}*/
-		this->hv = h * C;
+		r - halfSize - 1;
+		c - halfSize - 1;
+		blackRowGoal = r;
+		blackColGoal = c;
+		int blackRowCurr, blackColCurr;
+		r = 0, c = 0;
+		for (int i = 0; i < this->size; i++)
+		{
+			for (int j = 0; j < this->size; j++)
+			{
+				if (this->board[i][j] == BLACK)
+				{
+					r += i;
+					c += j;
+				}
+			}
+		}
+		blackRowCurr = r; 
+		blackColCurr = c;
+		black_distance = abs(blackRowGoal - blackRowCurr) + abs(blackColGoal - blackColCurr);
+		int redRowGoal, redColGoal;
+		r = 0, c = 0;
+		totalValue = 0;
+		for (int i = halfSize; i < this->size; i++)
+		{
+			for (int j = halfSize; j < this->size; j++)
+			{
+				r += i;
+				c += j;
+			}
+		}
+		r - halfSize;
+		c - halfSize;
+		redRowGoal = r; 
+		redColGoal = c;
+		int redRowCurr, redColCurr;
+		 r = 0, c = 0;
+		for (int i = 0; i < this->size; i++)
+		{
+			for (int j = 0; j < this->size; j++)
+			{
+				if (this->board[i][j] == RED)
+				{
+					r += i;
+					c += j;
+				}
+			}
+		}
+		redRowCurr = r; redColCurr = c;
+		//get the total black distance
+		red_distance = abs(redRowGoal - redRowCurr) + abs(redColGoal - redColCurr);
+
+		//get the total distance of black and red pieces
+		total_distance = red_distance + black_distance;
+		this->hv = total_distance * C;
 	}
 	return this->hv;
 }

@@ -6,12 +6,13 @@
 #include <string>
 #include <memory>
 #include <math.h> 
+//#include <map>
 #define RED 'R'
 #define BLACK 'B'
 #define OUTOFBOUNDS '#'
 #define BLANK ' '
 #define DEBUG false
-#define C 100.0
+#define C 3.0
 
 class Board
 {
@@ -45,6 +46,6 @@ private:
 	int blank_r;
 	int blank_c;
 	int outOfBounds_count;
-
+	//std::map<int, int> black_max, red_max;
 };
 
