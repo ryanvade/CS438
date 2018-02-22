@@ -48,8 +48,8 @@ public:
 	~Board();
 	Board* parent;
 	bool operator>(Board* rhs) const;
-	float hValue();
-	float hv, gv, fv;
+	double hValue();
+	double hv, gv, fv;
 
 private:
 	int size;

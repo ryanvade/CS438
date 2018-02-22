@@ -73,7 +73,7 @@ Board::Board(int size)
 	this->black_max[9] = 70;
 	this->black_max[11] = 120;
 	this->red_max[5] = 33;
-	this->red_max[7] = 56;
+	this->red_max[7] = 84;
 	this->red_max[9] = 170;
 	this->red_max[11] = 300;
 
@@ -104,7 +104,7 @@ Board::Board(int size, char** board) {
 	this->black_max[9] = 70;
 	this->black_max[11] = 120;
 	this->red_max[5] = 33;
-	this->red_max[7] = 56;
+	this->red_max[7] = 84;
 	this->red_max[9] = 170;
 	this->red_max[11] = 300;
 }
@@ -117,7 +117,7 @@ Board::~Board()
 		for (size_t i = 0; i < this->size; i++)
 		{
 			delete(this->board[i]);
-			this->board[i] == nullptr;
+			this->board[i] = nullptr;
 		}
 		delete(this->board);
 		this->board = nullptr;
@@ -343,7 +343,7 @@ bool Board::operator>(Board*  rhs) const
 	return this->fv < rhs->fv;
 }
 
-float Board::hValue() {
+double Board::hValue() {
 	if (this->hv == -1) {
 		double h = 0.0;
 
@@ -400,6 +400,7 @@ float Board::hValue() {
 			total_distance = red_distance + black_distance;
 			this->hv = total_distance * C;
 			#ifdef DEBUG
+			this->print(std::cout);
 			std::cout << "Black Distance: " << black_distance;
 			std::cout << " Red Distance: " << red_distance;
 			std::cout << " Total Distance: " << total_distance << std::endl;
