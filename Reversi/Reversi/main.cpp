@@ -2,10 +2,9 @@
 #include <fstream>
 #include <time.h>
 #include "gamecomm.h"
+#include "Board.h"
 
-#define EMPTY 0
-#define RED 1
-#define BLACK -1
+
 
 using namespace std;
 
@@ -19,20 +18,6 @@ const int VS=-1000000;
 const int VL=1000000;
 int nodecount = 0;
 
-struct Board
-{
-	int m[8][8];	// 1, 0, -1
-	int r,c, turn;	// the move that gets to this board
-	Board(int n[][8],int row=8, int column=8, int t=1)
-	{
-		for (int k=0;k<8;k++)
-			for (int l=0;l<8;l++)
-				m[k][l]=n[k][l];
-		r=row;c=column; turn=t;
-	}
-};
-
-typedef Board* state_t;
 
 state_t best = NULL;
 
@@ -69,7 +54,7 @@ void printBoard(state_t board) {
 }
 
 // Get all of the possible moves for the 'turn'
-void expand(state_t board, state_t successors[], int numsuccessors, int turn) {
+void expand(state_t board, state_t successors[], int numsuccessors, Color turn) {
 
 }
 
