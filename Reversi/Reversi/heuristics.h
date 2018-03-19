@@ -4,6 +4,228 @@
 // Reference: https://courses.cs.washington.edu/courses/cse573/04au/Project/mini1/RUSSIA/Final_Paper.pdf
 
 bool isValidMove(Color color, state_t board, int x, int y) {
+	if (board->m[x][y] != EMPTY) return false;
+	// if the top left exists and is the same color as current...
+	if (x > 0 && y > 0 && board->m[x - 1][y - 1] == color) {
+		// All pieces straight up
+		for (size_t i = 0; i < y; i++)
+		{
+			if (board->m[x][i] == color) {
+				return true;
+			}
+		}
+		// All pieces straight down
+		for (size_t i = 7; i > y; i--)
+		{
+			if (board->m[x][i] == color) {
+				return true;
+			}
+		}
+		// All pieces straight left
+		for (size_t i = 0; i < x; i++)
+		{
+			if (board->m[i][y] == color) {
+				return true;
+			}
+		}
+		// All pieces straight right
+		for (size_t i = 7; i > x; i--)
+		{
+			if (board->m[i][y] == color) {
+				return true;
+			}
+		}
+	}
+	// if the top  exists and is not the same color as current...
+	if (x > 0 && y < 8 && board->m[x - 1][y] == color) {
+		// All pieces straight down
+		for (size_t i = 7; i > y; i--)
+		{
+			if (board->m[x][i] == color) {
+				return true;
+			}
+		}
+		// All pieces straight left
+		for (size_t i = 0; i < x; i++)
+		{
+			if (board->m[i][y] == color) {
+				return true;
+			}
+		}
+		// All pieces straight right
+		for (size_t i = 7; i > x; i--)
+		{
+			if (board->m[i][y] == color) {
+				return true;
+			}
+		}
+	}
+	// if the top right  exists and is the same color as current...
+	if (x < 7 && y > 0 && board->m[x + 1][y - 1] == color) {
+		// All pieces straight up
+		for (size_t i = 0; i < y; i++)
+		{
+			if (board->m[x][i] == color) {
+				return true;
+			}
+		}
+		// All pieces straight down
+		for (size_t i = 7; i > y; i--)
+		{
+			if (board->m[x][i] == color) {
+				return true;
+			}
+		}
+		// All pieces straight left
+		for (size_t i = 0; i < x; i++)
+		{
+			if (board->m[i][y] == color) {
+				return true;
+			}
+		}
+		// All pieces straight right
+		for (size_t i = 7; i > x; i--)
+		{
+			if (board->m[i][y] == color) {
+				return true;
+			}
+		}
+	}
+	// if the right  exists and is the same color as current...
+	if (x < 7 && y > 0 && board->m[x + 1][y] == color) {
+		// All pieces straight up
+		for (size_t i = 0; i < y; i++)
+		{
+			if (board->m[x][i] == color) {
+				return true;
+			}
+		}
+		// All pieces straight down
+		for (size_t i = 7; i > y; i--)
+		{
+			if (board->m[x][i] == color) {
+				return true;
+			}
+		}
+		// All pieces straight left
+		for (size_t i = 0; i < x; i++)
+		{
+			if (board->m[i][y] == color) {
+				return true;
+			}
+		}
+	}
+	// if the bottom right  exists and is the same color as current...
+	if (x < 7 && y < 7 && board->m[x + 1][y + 1] == color) {
+		// All pieces straight up
+		for (size_t i = 0; i < y; i++)
+		{
+			if (board->m[x][i] == color) {
+				return true;
+			}
+		}
+		// All pieces straight down
+		for (size_t i = 7; i > y; i--)
+		{
+			if (board->m[x][i] == color) {
+				return true;
+			}
+		}
+		// All pieces straight left
+		for (size_t i = 0; i < x; i++)
+		{
+			if (board->m[i][y] == color) {
+				return true;
+			}
+		}
+		// All pieces straight right
+		for (size_t i = 7; i > x; i--)
+		{
+			if (board->m[i][y] == color) {
+				return true;
+			}
+		}
+	}
+	// if the bottom  exists and is the same color as current...
+	if (x < 7 && y < 7  && board->m[x][y + 1] == color) {
+		// All pieces straight up
+		for (size_t i = 0; i < y; i++)
+		{
+			if (board->m[x][i] == color) {
+				return true;
+			}
+		}
+		// All pieces straight left
+		for (size_t i = 0; i < x; i++)
+		{
+			if (board->m[i][y] == color) {
+				return true;
+			}
+		}
+		// All pieces straight right
+		for (size_t i = 7; i > x; i--)
+		{
+			if (board->m[i][y] == color) {
+				return true;
+			}
+		}
+	}
+	// if the bottom left  exists and is the same color as current...
+	if (x < 7 && y > 0 && board->m[x - 1][y + 1] == color) {
+		// All pieces straight up
+		for (size_t i = 0; i < y; i++)
+		{
+			if (board->m[x][i] == color) {
+				return true;
+			}
+		}
+		// All pieces straight down
+		for (size_t i = 7; i > y; i--)
+		{
+			if (board->m[x][i] == color) {
+				return true;
+			}
+		}
+		// All pieces straight left
+		for (size_t i = 0; i < x; i++)
+		{
+			if (board->m[i][y] == color) {
+				return true;
+			}
+		}
+		// All pieces straight right
+		for (size_t i = 7; i > x; i--)
+		{
+			if (board->m[i][y] == color) {
+				return true;
+			}
+		}
+	}
+	// if the left exists and is the same color as current...
+	if (x > 0 && y > 0 && board->m[x - 1][y] == color) {
+		// All pieces straight up
+		for (size_t i = 0; i < y; i++)
+		{
+			if (board->m[x][i] == color) {
+				return true;
+			}
+		}
+		// All pieces straight down
+		for (size_t i = 7; i > y; i--)
+		{
+			if (board->m[x][i] == color) {
+				return true;
+			}
+		}
+		// All pieces straight right
+		for (size_t i = 7; i > x; i--)
+		{
+			if (board->m[i][y] == color) {
+				return true;
+			}
+		}
+	}
+	return false;
 
 }
 
@@ -11,7 +233,7 @@ int countOfValidMoves(Color color, state_t board) {
 	int count = 0;
 	for (size_t i = 0; i < 8; i++)
 	{
-		for (size_t j = 0; i < 8; i++)
+		for (size_t j = 0; j < 8; j++)
 		{
 			if (isValidMove(color, board, i, j)) {
 				count++;
