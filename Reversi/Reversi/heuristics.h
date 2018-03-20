@@ -1,571 +1,236 @@
+/*
+* heuristics.h
+*
+* By Ryan Owens
+*
+* For CS438
+*
+* Created on 03/09/2018
+*
+* Used to calculate heuristics for a Reversi Board
+*/
 #pragma once
 #include "Board.h"
 
-// Reference: https://courses.cs.washington.edu/courses/cse573/04au/Project/mini1/RUSSIA/Final_Paper.pdf
+// Reference:
+// https://courses.cs.washington.edu/courses/cse573/04au/Project/mini1/RUSSIA/Final_Paper.pdf
+
+bool validIndex(int x, int y) { return x < 8 && x >= 0 && y < 8 && y >= 0; }
 
 bool isValidMove(Color color, state_t board, int x, int y) {
-	if (board->m[x][y] != EMPTY) return false;
-	// if the top left exists and is the same color as current...
-	if (x > 0 && y > 0 && board->m[x - 1][y - 1] == color) {
-		// All pieces straight up
-		for (size_t i = 0; i < y; i++)
-		{
-			if (board->m[x][i] == color) {
-				return true;
-			}
-		}
-		// All pieces straight down
-		for (size_t i = 7; i > y; i--)
-		{
-			if (board->m[x][i] == color) {
-				return true;
-			}
-		}
-		// All pieces straight left
-		for (size_t i = 0; i < x; i++)
-		{
-			if (board->m[i][y] == color) {
-				return true;
-			}
-		}
-		// All pieces straight right
-		for (size_t i = 7; i > x; i--)
-		{
-			if (board->m[i][y] == color) {
-				return true;
-			}
-		}
-	}
-	// if the top  exists and is not the same color as current...
-	if (x > 0 && y < 8 && board->m[x - 1][y] == color) {
-		// All pieces straight down
-		for (size_t i = 7; i > y; i--)
-		{
-			if (board->m[x][i] == color) {
-				return true;
-			}
-		}
-		// All pieces straight left
-		for (size_t i = 0; i < x; i++)
-		{
-			if (board->m[i][y] == color) {
-				return true;
-			}
-		}
-		// All pieces straight right
-		for (size_t i = 7; i > x; i--)
-		{
-			if (board->m[i][y] == color) {
-				return true;
-			}
-		}
-	}
-	// if the top right  exists and is the same color as current...
-	if (x < 7 && y > 0 && board->m[x + 1][y - 1] == color) {
-		// All pieces straight up
-		for (size_t i = 0; i < y; i++)
-		{
-			if (board->m[x][i] == color) {
-				return true;
-			}
-		}
-		// All pieces straight down
-		for (size_t i = 7; i > y; i--)
-		{
-			if (board->m[x][i] == color) {
-				return true;
-			}
-		}
-		// All pieces straight left
-		for (size_t i = 0; i < x; i++)
-		{
-			if (board->m[i][y] == color) {
-				return true;
-			}
-		}
-		// All pieces straight right
-		for (size_t i = 7; i > x; i--)
-		{
-			if (board->m[i][y] == color) {
-				return true;
-			}
-		}
-	}
-	// if the right  exists and is the same color as current...
-	if (x < 7 && y > 0 && board->m[x + 1][y] == color) {
-		// All pieces straight up
-		for (size_t i = 0; i < y; i++)
-		{
-			if (board->m[x][i] == color) {
-				return true;
-			}
-		}
-		// All pieces straight down
-		for (size_t i = 7; i > y; i--)
-		{
-			if (board->m[x][i] == color) {
-				return true;
-			}
-		}
-		// All pieces straight left
-		for (size_t i = 0; i < x; i++)
-		{
-			if (board->m[i][y] == color) {
-				return true;
-			}
-		}
-	}
-	// if the bottom right  exists and is the same color as current...
-	if (x < 7 && y < 7 && board->m[x + 1][y + 1] == color) {
-		// All pieces straight up
-		for (size_t i = 0; i < y; i++)
-		{
-			if (board->m[x][i] == color) {
-				return true;
-			}
-		}
-		// All pieces straight down
-		for (size_t i = 7; i > y; i--)
-		{
-			if (board->m[x][i] == color) {
-				return true;
-			}
-		}
-		// All pieces straight left
-		for (size_t i = 0; i < x; i++)
-		{
-			if (board->m[i][y] == color) {
-				return true;
-			}
-		}
-		// All pieces straight right
-		for (size_t i = 7; i > x; i--)
-		{
-			if (board->m[i][y] == color) {
-				return true;
-			}
-		}
-	}
-	// if the bottom  exists and is the same color as current...
-	if (x < 7 && y < 7  && board->m[x][y + 1] == color) {
-		// All pieces straight up
-		for (size_t i = 0; i < y; i++)
-		{
-			if (board->m[x][i] == color) {
-				return true;
-			}
-		}
-		// All pieces straight left
-		for (size_t i = 0; i < x; i++)
-		{
-			if (board->m[i][y] == color) {
-				return true;
-			}
-		}
-		// All pieces straight right
-		for (size_t i = 7; i > x; i--)
-		{
-			if (board->m[i][y] == color) {
-				return true;
-			}
-		}
-	}
-	// if the bottom left  exists and is the same color as current...
-	if (x < 7 && y > 0 && board->m[x - 1][y + 1] == color) {
-		// All pieces straight up
-		for (size_t i = 0; i < y; i++)
-		{
-			if (board->m[x][i] == color) {
-				return true;
-			}
-		}
-		// All pieces straight down
-		for (size_t i = 7; i > y; i--)
-		{
-			if (board->m[x][i] == color) {
-				return true;
-			}
-		}
-		// All pieces straight left
-		for (size_t i = 0; i < x; i++)
-		{
-			if (board->m[i][y] == color) {
-				return true;
-			}
-		}
-		// All pieces straight right
-		for (size_t i = 7; i > x; i--)
-		{
-			if (board->m[i][y] == color) {
-				return true;
-			}
-		}
-	}
-	// if the left exists and is the same color as current...
-	if (x > 0 && y > 0 && board->m[x - 1][y] == color) {
-		// All pieces straight up
-		for (size_t i = 0; i < y; i++)
-		{
-			if (board->m[x][i] == color) {
-				return true;
-			}
-		}
-		// All pieces straight down
-		for (size_t i = 7; i > y; i--)
-		{
-			if (board->m[x][i] == color) {
-				return true;
-			}
-		}
-		// All pieces straight right
-		for (size_t i = 7; i > x; i--)
-		{
-			if (board->m[i][y] == color) {
-				return true;
-			}
-		}
-	}
-	return false;
+  if (board->m[x][y] != EMPTY)
+    return false;
+  Color opposite = color * -1;
+  // Check if 'Up' contains the opposite color
+  int cx = x - 1;
+  int cy = y;
+  while (validIndex(cx, cy) && board->m[cx][cy] == opposite) {
+    cx--;
+  }
+  if (cx != x - 1 && board->m[cx][cy] == color) {
+    return true;
+  }
 
+  // Check if 'Down' contains the opposite color
+  cx = x + 1;
+  cy = y;
+  while (validIndex(cx, cy) && board->m[cx][cy] == opposite) {
+    cx++;
+  }
+  if (cx != x + 1 && board->m[cx][cy] == color) {
+    return true;
+  }
+
+  // Check if 'Left' contains the opposite color
+  cx = x;
+  cy = y - 1;
+  while (validIndex(cx, cy) && board->m[cx][cy] == opposite) {
+    cy--;
+  }
+  if (cy != y - 1 && board->m[cx][cy] == color) {
+    return true;
+  }
+
+  // Check if 'Right' contains the opposite color
+  cx = x;
+  cy = y + 1;
+  while (validIndex(cx, cy) && board->m[cx][cy] == opposite) {
+    cx++;
+  }
+  if (cx != y + 1 && board->m[cx][cy] == color) {
+    return true;
+  }
+  return false;
 }
 
 int countOfValidMoves(Color color, state_t board) {
-	int count = 0;
-	for (size_t i = 0; i < 8; i++)
-	{
-		for (size_t j = 0; j < 8; j++)
-		{
-			if (isValidMove(color, board, i, j)) {
-				count++;
-			}
-		}
-	}
-	return count;
+  int count = 0;
+  for (size_t i = 0; i < 8; i++) {
+    for (size_t j = 0; j < 8; j++) {
+      if (isValidMove(color, board, i, j)) {
+        count++;
+      }
+    }
+  }
+  return count;
 }
 
 double heuristic(Color current, state_t board) {
-	int red_score = 0, black_score = 0;
-	int red_front_count = 0, black_front_count = 0;
-	int red_squares = 0, black_squares = 0;
-	int red_corners = 0, black_corners = 0;
-	int red_corner_adjacent = 0, black_corner_adjacent = 0;
-	int red_move_count = 0, black_move_count = 0;
+	int color_utility = 0, opp_utility = 0;
+	int color_front_count = 0, opp_front_count = 0;
+	int dx, dy;
+  int color_corner_count = 0, opp_corner_count = 0;
+  int color_corner_adjacent_count = 0, color_opp_corner_adjacent_count = 0;
 
-	for (size_t i = 0; i < 8; i++)
-	{
-		for (size_t j = 0; j < 8; j++)
-		{
-			// Calculate weights from static scores
-			if (board->m[i][j] == RED) {
-				red_score += staticScores[i][j];
-				red_squares++;
-			}
-			else if (board->m[i][j] == BLACK) {
-				black_score += staticScores[i][j];
-				black_squares++;
-			}
+  double coinParity = 0.0;
+  double cornerEmphasis = 0.0;
+  double cornerAdjacencyEmphasis = 0.0;
+  double mobility = 0.0;
+  double front = 0.0;
+  double stability = 0.0;
 
-			// Font Calculations
-			if (board->m[i][j] != EMPTY) {
-				// Top Left of current
-				if (i - 1 > 0 && j - 1 > 0) {
-					if (board->m[i - 1][j - 1] == RED) {
-						red_front_count++;
-					}
-					else if (board->m[i - 1][j - 1] == BLACK) {
-						black_front_count++;
-					}
-				}
+  Color color = board->turn;
+  Color opp_color = color * -1;
 
-				// Top Of Current
-				if (i - 1 > 0) {
-					if (board->m[i - 1][j] == RED) {
-						red_front_count++;
-					}
-					else if (board->m[i - 1][j] == BLACK) {
-						black_front_count++;
-					}
-				}
-				// Top Right of current
-				if (i - 1 > 0 && j + 1 < 8) {
-					if (board->m[i - 1][j + 1] == RED) {
-						red_front_count++;
-					}
-					else if (board->m[i - 1][j + 1] == BLACK) {
-						black_front_count++;
-					}
-				}
-				// Right of Current
-				if (j + 1 < 8) {
-					if (board->m[i][j + 1] == RED) {
-						red_front_count++;
-					}
-					else if (board->m[i][j + 1] == BLACK) {
-						black_front_count++;
-					}
-				}
-				// Bottom Right of Current
-				if (i + 1 < 8 && j + 1 < 8) {
-					if (board->m[i +  1][j + 1] == RED) {
-						red_front_count++;
-					}
-					else if (board->m[i + 1][j + 1] == BLACK) {
-						black_front_count++;
-					}
-				}
-				// Bottom of Current
-				if (j + 1 < 8) {
-					if (board->m[i][j + 1] == RED) {
-						red_front_count++;
-					}
-					else if (board->m[i][j + 1] == BLACK) {
-						black_front_count++;
-					}
-				}
-				// Bottom Left of current {
-				if (i - 1 > 0 && j + 1 < 8) {
-					if (board->m[i][j] == RED) {
-						red_front_count++;
-					}
-					else if (board->m[i][j] == BLACK) {
-						black_front_count++;
-					}
-				}
-				// Left of Current
-				if (j - 1 > 0) {
-					if (board->m[i][j - 1] == RED) {
-						red_front_count++;
-					}
-					else if (board->m[i][j - 1] == BLACK) {
-						black_front_count++;
-					}
-				}
-			}
-		}
-	}
+  int color_move_count = countOfValidMoves(color, board);
+  int opp_move_count = countOfValidMoves(opp_color, board);
 
-	// Corner Counts
-	// Top Left
-	if (board->m[0][0] == RED) {
-		red_corners++;
-	}
-	else if (board->m[0][0] == BLACK) {
-		black_corners++;
-	}
-	// Top Right
-	if (board->m[0][7] == RED) {
-		red_corners++;
-	}
-	else if (board->m[0][7] == BLACK) {
-		black_corners++;
-	}
-	// Bottom Left
-	if (board->m[7][0] == RED) {
-		red_corners++;
-	}
-	else if (board->m[7][0] == BLACK) {
-		black_corners++;
-	}
-	// Bottom Right
-	if (board->m[7][7] == RED) {
-		red_corners++;
-	}
-	else if (board->m[7][7] == BLACK) {
-		black_corners++;
-	}
+  if (color_move_count > opp_move_count) {
+    mobility = (100.0 * color_move_count) / (color_move_count + opp_move_count);
+  } else if (color_move_count < opp_move_count) {
+    mobility = -(100.0 * opp_move_count) / (color_move_count + opp_move_count);
+  }
 
-	// Corner Adjacencies
-	// Top Left
-	if (board->m[0][0] == EMPTY) {
-		if (board->m[0][1] == RED) {
-			red_corner_adjacent++;
-		}
-		else if (board->m[0][1] == BLACK) {
-			black_corner_adjacent++;
-		}
+  for (int i = 0; i < 8; i++)
+    for (int j = 0; j < 8; j++) {
+      if (board->m[i][j] == color) {
+        stability += staticScores[i][j];
+        color_utility++;
+      } else if (board->m[i][j] == opp_color) {
+        stability -= staticScores[i][j];
+        opp_utility++;
+      }
+      if (board->m[i][j] != EMPTY) {
+        for (int k = 0; k < 8; k++) {
+          dx = i + distance_rotations_in_X[k];
+          dy = j + distance_rotations_in_Y[k];
+          if (validIndex(dx, dy) && board->m[dx][dy] == EMPTY) {
+            if (board->m[i][j] == color)
+              color_front_count++;
+            else
+              opp_front_count++;
+            break;
+          }
+        }
+      }
+    }
 
-		if (board->m[1][1] == RED) {
-			red_corner_adjacent++;
+  if (color_utility > opp_utility) {
+    coinParity = (100.0 * color_utility) / (color_utility + opp_utility);
+  } else if (color_utility < opp_utility) {
+    coinParity = -(100.0 * opp_utility) / (color_utility + opp_utility);
+  }
 
-		}
-		else if (board->m[1][1] == BLACK) {
-			black_corner_adjacent++;
+  if (color_front_count > opp_front_count) {
+    front =
+        -(100.0 * color_front_count) / (color_front_count + opp_front_count);
+  } else if (color_front_count < opp_front_count) {
+    front = (100.0 * opp_front_count) / (color_front_count + opp_front_count);
+  }
 
-		}
+  if (board->m[0][0] == color) {
+    color_corner_count++;
+  } else if (board->m[0][0] == opp_color) {
+    opp_corner_count++;
+  }
+  if (board->m[0][7] == color) {
+    color_corner_count++;
+  } else if (board->m[0][7] == opp_color) {
+    opp_corner_count++;
+  }
+  if (board->m[7][0] == color) {
+    color_corner_count++;
+  } else if (board->m[7][0] == opp_color) {
+    opp_corner_count++;
+  }
+  if (board->m[7][7] == color) {
+    color_corner_count++;
+  } else if (board->m[7][7] == opp_color) {
+    opp_corner_count++;
+  }
+  cornerEmphasis = 25 * (color_corner_count - opp_corner_count);
 
-		if (board->m[1][0] == RED) {
-			red_corner_adjacent++;
-
-		}
-		else if (board->m[1][0] == BLACK) {
-			black_corner_adjacent++;
-
-		}
-	}
-
-	// Top Right
-	if (board->m[0][7] == EMPTY) {
-		if (board->m[0][6] == RED) {
-			red_corner_adjacent++;
-
-		}
-		else if (board->m[0][6] == BLACK) {
-			black_corner_adjacent++;
-
-		}
-
-		if (board->m[1][6] == RED) {
-			red_corner_adjacent++;
-
-		}
-		else if (board->m[1][6] == BLACK) {
-			black_corner_adjacent++;
-
-		}
-
-		if (board->m[1][7] == RED) {
-			red_corner_adjacent++;
-
-		}
-		else if (board->m[1][7] == BLACK) {
-			black_corner_adjacent++;
-
-		}
-	}
-
-	// Bottom Left
-	if (board->m[7][0] == EMPTY) {
-		if (board->m[6][0] == RED) {
-			red_corner_adjacent++;
-
-		}
-		else if (board->m[6][0] == BLACK) {
-			black_corner_adjacent++;
-
-		}
-
-		if (board->m[6][1] == RED) {
-			red_corner_adjacent++;
-
-		}
-		else if (board->m[6][1] == BLACK) {
-			black_corner_adjacent++;
-
-		}
-
-		if (board->m[7][1] == RED) {
-			red_corner_adjacent++;
-
-		}
-		else if (board->m[7][1] == BLACK) {
-			black_corner_adjacent++;
-
-		}
-	}
-
-	// Bottom Right
-	if (board->m[7][7] == EMPTY) {
-		if (board->m[6][7] == RED) {
-			red_corner_adjacent++;
-		}
-		else if (board->m[6][7] == BLACK) {
-			black_corner_adjacent++;
-
-		}
-
-		if (board->m[6][6] == RED) {
-			red_corner_adjacent++;
-		}
-		else if (board->m[6][6] == BLACK) {
-			black_corner_adjacent++;
-
-		}
-
-		if (board->m[7][6] == RED) {
-			red_corner_adjacent++;
-		}
-		else if (board->m[7][6] == BLACK) {
-			black_corner_adjacent++;
-
-		}
-	}
-	red_move_count = countOfValidMoves(RED, board);
-	black_move_count = countOfValidMoves(BLACK, board);
-	
-	double p = 0.0;
-	double d = 0.0;
-	double f = 0.0;
-	double c = 0.0;
-	double l = 0.0;
-	double m = 0.0;
-
-	if (current == RED) {
-
-		if (red_squares > black_squares) {
-			p = (100.0 * red_squares) / (red_squares + black_squares);
-
-		}
-		else if (red_squares < black_squares) {
-			p = -(100.0 * black_squares) / (red_squares + black_squares);
-		}
-
-		if (red_front_count > black_front_count)
-
-			f = -(100.0 * red_front_count) / (red_front_count + black_front_count);
-
-		else if (red_front_count < black_front_count)
-
-			f = (100.0 * black_front_count) / (red_front_count + black_front_count);
-
-
-		c = 25.0 * (red_corners - black_corners);
-
-		l = -12.5 * (red_corner_adjacent - black_corner_adjacent);
-
-		if (red_move_count > black_move_count) {
-
-			m = (100.0 * red_corner_adjacent) / (red_corner_adjacent + black_corner_adjacent);
-		}
-		else if (red_move_count < black_move_count) {
-			m = -(100.0 * black_corner_adjacent) / (red_corner_adjacent + black_corner_adjacent);
-
-		}
-
-		d = (red_score - black_score);
-	}
-	else {
-		if (black_squares > red_squares) {
-			p = (100.0 * black_squares) / (black_squares + red_squares);
-
-		}
-		else if (black_squares < red_squares) {
-			p = -(100.0 * red_squares) / (black_squares + red_squares);
-		}
-
-		if (black_front_count > red_front_count)
-
-			f = -(100.0 * black_front_count) / (black_front_count + red_front_count);
-
-		else if (black_front_count < red_front_count)
-
-			f = (100.0 * red_front_count) / (black_front_count + red_front_count);
-
-
-		c = 25.0 * (black_corners - red_corners);
-
-		l = -12.5 * (black_corner_adjacent - red_corner_adjacent);
-
-		if (black_move_count > red_move_count) {
-
-			m = (100.0 * black_corner_adjacent) / (black_corner_adjacent + red_corner_adjacent);
-		}
-		else if (black_move_count < red_move_count) {
-			m = -(100.0 * red_corner_adjacent) / (black_corner_adjacent + red_corner_adjacent);
-
-		}
-
-		d = (black_score - red_score);
-	}
-
-	return (10 * p) + (801.724 * c) + (382.026 * l) + (78.922 * m) + (74.396 * f) + (10 * d);
+  if (board->m[0][0] == EMPTY) {
+    if (board->m[0][1] == color) {
+      color_corner_adjacent_count++;
+    } else if (board->m[0][1] == opp_color) {
+      color_opp_corner_adjacent_count++;
+    }
+    if (board->m[1][1] == color) {
+      color_corner_adjacent_count++;
+    } else if (board->m[1][1] == opp_color) {
+      color_opp_corner_adjacent_count++;
+    }
+    if (board->m[1][0] == color) {
+      color_corner_adjacent_count++;
+    } else if (board->m[1][0] == opp_color) {
+      color_opp_corner_adjacent_count++;
+    }
+  }
+  if (board->m[0][7] == EMPTY) {
+    if (board->m[0][6] == color) {
+      color_corner_adjacent_count++;
+    } else if (board->m[0][6] == opp_color) {
+      color_opp_corner_adjacent_count++;
+    }
+    if (board->m[1][6] == color) {
+      color_corner_adjacent_count++;
+    } else if (board->m[1][6] == opp_color) {
+      color_opp_corner_adjacent_count++;
+    }
+    if (board->m[1][7] == color) {
+      color_corner_adjacent_count++;
+    } else if (board->m[1][7] == opp_color) {
+      color_opp_corner_adjacent_count++;
+    }
+  }
+  if (board->m[7][0] == EMPTY) {
+    if (board->m[7][1] == color) {
+      color_corner_adjacent_count++;
+    } else if (board->m[7][1] == opp_color) {
+      color_opp_corner_adjacent_count++;
+    }
+    if (board->m[6][1] == color) {
+      color_corner_adjacent_count++;
+    } else if (board->m[6][1] == opp_color) {
+      color_opp_corner_adjacent_count++;
+    }
+    if (board->m[6][0] == color) {
+      color_corner_adjacent_count++;
+    } else if (board->m[6][0] == opp_color) {
+      color_opp_corner_adjacent_count++;
+    }
+  }
+  if (board->m[7][7] == EMPTY) {
+    if (board->m[6][7] == color) {
+      color_corner_adjacent_count++;
+    } else if (board->m[6][7] == opp_color) {
+      color_opp_corner_adjacent_count++;
+    }
+    if (board->m[6][6] == color) {
+      color_corner_adjacent_count++;
+    } else if (board->m[6][6] == opp_color) {
+      color_opp_corner_adjacent_count++;
+    }
+    if (board->m[7][6] == color) {
+      color_corner_adjacent_count++;
+    } else if (board->m[7][6] == opp_color) {
+      color_opp_corner_adjacent_count++;
+    }
+  }
+  cornerAdjacencyEmphasis =
+      -12.5 * (color_corner_adjacent_count - color_opp_corner_adjacent_count);
+  return (10 * coinParity) + (600 * cornerEmphasis) +
+         (200 * cornerAdjacencyEmphasis) + (100 * mobility) + (90 * front) +
+         (30 * stability);
 }
